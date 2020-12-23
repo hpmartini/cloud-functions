@@ -1,9 +1,19 @@
-// import * as functions from 'firebase-functions';
+import * as functions from "firebase-functions";
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+// http request 1
+exports.randomNumber = functions.https.onRequest((req, resp) => {
+  const number = Math.round(Math.random() * 100);
+  console.log(number);
+  resp.send(number.toString());
+});
+
+// http request
+exports.toTheDojo = functions.https.onRequest((req, resp) => {
+  resp.redirect("https://hpm.dev");
+});
+
+// http callable functions
+exports.sayHello = functions.https.onCall((data, context) => {
+  const name = data.name;
+  return `hello, ${name}`;
+});
