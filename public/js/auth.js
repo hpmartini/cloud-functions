@@ -12,6 +12,7 @@ authSwitchLinks.forEach((link) => {
   });
 });
 
+// register form
 registerForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -29,4 +30,43 @@ registerForm.addEventListener("submit", (e) => {
       registerForm.querySelector(".error").textContent = error;
       console.log(error);
     });
+});
+
+// login form
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const email = loginForm.email.value;
+  const password = loginForm.password.value;
+
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((user) => {
+      console.log("logged in", user);
+      loginForm.reset();
+    })
+    .catch((error) => {
+      loginForm.querySelector(".error").textContent = error;
+      console.log(error);
+    });
+});
+
+// auth listener
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    authWrapper.classList.remove("open");
+    authModals.forEach((modal) => modal.classList.remove("active"));
+  } else {
+    authWrapper.classList.add("open");
+    authModals[0].classList.add("active");
+  }
+});
+
+// sign out
+signOut.addEventListener("click", () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => console.log("signed out"));
 });
