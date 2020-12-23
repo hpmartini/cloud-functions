@@ -1,4 +1,7 @@
 import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
+
+admin.initializeApp();
 
 // http request 1
 exports.randomNumber = functions.https.onRequest((req, resp) => {
@@ -16,4 +19,19 @@ exports.toTheDojo = functions.https.onRequest((req, resp) => {
 exports.sayHello = functions.https.onCall((data, context) => {
   const name = data.name;
   return `hello, ${name}`;
+});
+
+// auth trigger (new user signed up)
+exports.newUserSignup = functions.auth.user().onCreate((user) => {
+  console.log("user created", user.email, user.uid);
+  return admin.firestore().collection("users").doc(user.uid).set({
+    email: user.email,
+    upvotedOn: [],
+  });
+});
+
+// auth trigger (user deleted)
+exports.userDeleted = functions.auth.user().onDelete((user) => {
+  console.log("user deleted", user.email, user.uid);
+  return admin.firestore().collection("users").doc(user.uid).delete();
 });
