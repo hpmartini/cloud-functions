@@ -1,0 +1,22 @@
+{
+  "name": "firebase-functions",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "prettier": "^2.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hpmartini/cloud-functions.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hpmartini/cloud-functions/issues"
+  },
+  "homepage": "https://github.com/hpmartini/cloud-functions#readme"
+}
